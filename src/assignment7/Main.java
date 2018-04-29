@@ -150,30 +150,36 @@ public class Main {
         System.out.println("Enter threshold hit number");
         Params.filter = scanner.nextInt();
 
-    	System.out.println("Start");
+    	//System.out.println("Start");
+        //Grabs start time of the program
         long start = System.nanoTime();
     	
     	File file = new File(Params.folder);
     	List<String> fileNames = Arrays.asList(file.list());
         
+    	//Hashmap that contains phrases and associated set of documents
         Params.bigList = new HashMap();
+        //Array of threads 
         Thread[] tList = new Thread[Params.numThreads];
+        //variable that represents the bumber of files each thread handles
         int split = fileNames.size()/Params.numThreads;
         
+        //Creates each thread and adds it to the List
         for(int i = 0; i < Params.numThreads; i++) {
+        	//All threads run at least "split" files
         	if(i < Params.numThreads - 1) {
         		BigHash func = new BigHash(fileNames, split * i, split);
         		Thread aThread = new Thread(func);
         		aThread.start();
         		tList[i] = aThread;
-        	}else {
+        	}else { //the last thread runs all the remaining files
         		BigHash func = new BigHash(fileNames, split * i, fileNames.size()%Params.numThreads + split);
         		Thread aThread = new Thread(func);
         		aThread.start();
         		tList[i] = aThread;
         	}
         }
-        
+        //joins all the threads
         for(Thread aThread : tList) {
         	try {
 				aThread.join();
@@ -182,10 +188,13 @@ public class Main {
 			}
         }
         
+        
+        //A hashmap that tracks File pairs and matches
         HashMap<String,Integer> comparisons = new HashMap<>();
-        tList = new Thread[Params.numThreads];
+        //The number of pairs each thread handles 
         split = Params.bigList.size() / Params.numThreads;
         
+        //Compares Files and stores the result
         Collection<TreeSet<Integer>> matchList = Params.bigList.values();
         for(TreeSet<Integer> theSet: matchList) {
         	if(theSet.size() >= 2) {
@@ -203,10 +212,10 @@ public class Main {
 	        			}
 	        		}
 	        	}
-        		
         	}
         }
         
+        //Goes through the matches and prints out the ones above a certain parameter
         Set<String> fileCompare = comparisons.keySet();
         for(String comboName : fileCompare) {
         	if(comparisons.get(comboName) >= Params.filter) {
@@ -214,6 +223,7 @@ public class Main {
         	}
         }
         
+        //prints out ru time
         long end = System.nanoTime();
         System.out.println("\n\n" + "BigList size: " + Params.bigList.size());
         System.out.println("Done");
