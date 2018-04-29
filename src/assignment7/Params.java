@@ -9,8 +9,9 @@ public class Params {
     public static int phraseLength = 6;
     public static int numThreads = 60;
     public static int filter = 200;
-    public static String folder = "src/big_doc_set";
+    public static String folder = "src/sm_doc_set";
     
-    public static HashMapList hList;
+//    public static HashMapList hList;
     public static HashMap<Integer,TreeSet<Integer>> bigList;
+
 }

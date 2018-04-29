@@ -141,7 +141,15 @@ public class Main {
         */
     	
     	//********************************************************************************************************************
-    	
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter File Path");
+        Params.folder = scanner.nextLine();
+        System.out.println("Enter number of words in phrase");
+        Params.phraseLength = scanner.nextInt();
+        System.out.println("Enter threshold hit number");
+        Params.filter = scanner.nextInt();
+
     	System.out.println("Start");
         long start = System.nanoTime();
     	
@@ -201,7 +209,7 @@ public class Main {
         
         Set<String> fileCompare = comparisons.keySet();
         for(String comboName : fileCompare) {
-        	if(comparisons.get(comboName) >= 200) {
+        	if(comparisons.get(comboName) >= Params.filter) {
         		System.out.println(comboName + " " + comparisons.get(comboName));
         	}
         }
