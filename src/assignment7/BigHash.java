@@ -47,7 +47,7 @@ public class BigHash implements Runnable{
                     String word = arr.get(j).toLowerCase().replaceAll("[^a-zA-Z0-9]","");
                     phrase.append(word);
                 }
-                
+
                 synchronized(Params.bigList) {
 	                int key = phrase.toString().hashCode();
 	                if(Params.bigList.containsKey(key)) {

@@ -206,20 +206,46 @@ public class Main {
         		
         	}
         }
-        
+        HashMap<String,Integer> results = new HashMap<>();
         Set<String> fileCompare = comparisons.keySet();
         for(String comboName : fileCompare) {
         	if(comparisons.get(comboName) >= Params.filter) {
-        		System.out.println(comboName + " " + comparisons.get(comboName));
+//        		System.out.println(comboName + " " + comparisons.get(comboName));
+        		results.put(comboName, comparisons.get(comboName));
         	}
+        }
+
+        Map<String,Integer> sortedResults = Main.sortByValue(results);
+        for(String key: sortedResults.keySet()) {
+            System.out.println(sortedResults.get(key) + " " + key);
         }
         
         long end = System.nanoTime();
-        System.out.println("\n\n" + "BigList size: " + Params.bigList.size());
+//        System.out.println("\n\n" + "BigList size: " + Params.bigList.size());
         System.out.println("Done");
         long elapsedTime = end - start;
         double seconds = (double)elapsedTime / 1000000000.0;
         System.out.println(seconds + " seconds elapsed");
         
+    }
+
+    public static Map sortByValue(Map unsortedMap) {
+        Map sortedMap = new TreeMap(new ValueComparator(unsortedMap));
+        sortedMap.putAll(unsortedMap);
+        return sortedMap;
+    }
+}
+
+class ValueComparator implements Comparator {
+    Map map;
+
+    public ValueComparator(Map map) {
+        this.map = map;
+    }
+
+    public int compare(Object keyA, Object keyB) {
+        Comparable valueA = (Comparable) map.get(keyA);
+        Comparable valueB = (Comparable) map.get(keyB);
+        return valueB.compareTo(valueA);
     }
 }
