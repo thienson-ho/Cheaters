@@ -23,10 +23,10 @@ public class BigHash implements Runnable{
 	
 	public void run() {
 		//loop that iterates over length # of files
-		for(int k = start; k < start + length; k++) {
-			
-			//gets appropriate file path 
-			List<String> arr = new ArrayList<String>();
+	  for(int k = start; k < start + length; k++) {
+	    //gets appropriate file path 
+	    List<String> arr = new ArrayList<String>();
+		  
             try {
                 BufferedReader br = new BufferedReader(new FileReader(Params.folder+"/" + fileNames.get(k)));
 
@@ -37,14 +37,12 @@ public class BigHash implements Runnable{
                         Collections.addAll(arr, sCurrentLine.split(" "));
                     }
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             //hashes the phrases and puts them in a large hashmap
             for(int i = 0; i < arr.size() - Params.phraseLength + 1; i++) {
-
             	//forms phrases
             	StringBuilder phrase = new StringBuilder("");
                 for (int j = i; j < i + Params.phraseLength; j++) {
