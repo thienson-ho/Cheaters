@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args) {
         //Gets input parameters
-		Scanner scanner = new Scanner(System.in);
+	Scanner scanner = new Scanner(System.in);
         System.out.println("Enter File Path");
         Params.folder = scanner.nextLine();
         System.out.println("Enter number of words in phrase");
@@ -26,7 +26,7 @@ public class Main {
         Params.bigList = new HashMap();
         //Array of threads 
         Thread[] tList = new Thread[Params.numThreads];
-        //variable that represents the bumber of files each thread handles
+        //variable that represents the number of files each thread handles
         int split = fileNames.size()/Params.numThreads;
         
         //Creates each thread and adds it to the List
